@@ -43,9 +43,8 @@ public class WishListController {
 
     @PostMapping(value = "/{userName}/create/wishlist")
     public WishList createWishList(@RequestBody WishList wishList, @PathVariable String userName){
-        log.info(wishList.getItemList());
         Users temp = usersService.getUserByUserName(userName);
-        log.info("User -> " + temp);
+        log.info("Adding new wishlist to user -> " + temp.toString());
         temp.getWishLists().add(wishList);
         usersService.addUser(temp);
         return wishList;

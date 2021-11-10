@@ -17,8 +17,8 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String itemName;
     private double cost;
-    private String name;
     private String url;
     private boolean bought;
 

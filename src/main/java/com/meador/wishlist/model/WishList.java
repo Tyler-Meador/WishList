@@ -17,6 +17,8 @@ public class WishList {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    private String name;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Item> itemList;
