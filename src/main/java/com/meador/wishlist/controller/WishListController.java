@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,6 +32,15 @@ public class WishListController {
         List<WishList> tempWishList = Collections.emptyList();
         user.setWishLists(tempWishList);
         return usersService.addUser(user);
+    }
+
+    @PostMapping(value = "/login")
+    public String login(@RequestBody Users user){
+        if(usersService.getUserByUserName(user.getUserName()).getPassword().equals(user.getPassword())){
+            return "Logged in Successfully";
+        }else{
+            return "Failed to log in";
+        }
     }
 
     @GetMapping(value = "/profile/{userName}")
@@ -99,4 +107,8 @@ public class WishListController {
         return Collections.emptyList();
     }
 
+    @GetMapping(value = "/{userName}/wishlist")
+    public List<WishList> getUsersWishLists(@PathVariable String userName, @PathVariable int wishListId){
+        return usersService.getUserByUserName(userName).getWishLists();
+    }
 }
