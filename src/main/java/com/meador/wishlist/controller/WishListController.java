@@ -1,6 +1,5 @@
 package com.meador.wishlist.controller;
 
-import com.meador.wishlist.model.Item;
 import com.meador.wishlist.model.Users;
 import com.meador.wishlist.model.WishList;
 import com.meador.wishlist.service.UsersService;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class WishListController {
     @PostMapping(value = "/register")
     public Users createUser(@RequestBody Users user){
         log.info("Adding user " + user.getUserName());
-        log.info("User -> " + user.toString());
+        log.info("User -> " + user);
         List<WishList> tempWishList = Collections.emptyList();
         user.setWishLists(tempWishList);
         return usersService.addUser(user);
