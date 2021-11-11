@@ -41,13 +41,25 @@ public class WishListController {
         return usersService.getUserByUserName(userName);
     }
 
-    @PostMapping(value = "/{userName}/create/wishlist")
-    public WishList createWishList(@RequestBody WishList wishList, @PathVariable String userName){
+    @PostMapping(value = "/{userName}/{operation}/wishlist")
+    public List<WishList> createWishList(@RequestBody WishList wishList, @PathVariable String userName, @PathVariable String operation){
+
         Users temp = usersService.getUserByUserName(userName);
-        log.info("Adding new wishlist to user -> " + temp.toString());
-        temp.getWishLists().add(wishList);
-        usersService.addUser(temp);
-        return wishList;
+
+        switch (operation) {
+            case "create" -> {
+                log.info("Adding new wishlist " + wishList + " to user -> " + temp.getUserName());
+                temp.getWishLists().add(wishList);
+                usersService.addUser(temp);
+            }
+            case "delete" -> {
+                log.info("Removing wishlist " + wishList + " from User -> " + temp.getUserName());
+                log.info("to delete -> " + wishList.toString());
+                temp.getWishLists().removeIf(list -> list.getId() == wishList.getId());
+                usersService.addUser(temp);
+            }
+        }
+        return temp.getWishLists();
     }
 
 
